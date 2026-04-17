@@ -1,334 +1,159 @@
 import streamlit as st
-
-# --- Movie Database ---
-# The comprehensive movie database with added entries for full language-genre coverage
 movies_data = [
     # Hindi Movies
-    {
-        'title': 'Pathaan', 'language': 'hindi', 'genre': 'action',
-        'description': 'An exiled RAW agent takes on a dangerous terrorist group led by a former agent with a vendetta. He must stop their deadly plan to unleash a biological weapon on India.',
-        'director': 'Siddharth Anand', 'rating': '6.0/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Dangal', 'language': 'hindi', 'genre': 'action',
-        'description': 'Based on the true story of Mahavir Singh Phogat, a former wrestler who trains his daughters Geeta and Babita to become world-class wrestlers. The film showcases their journey and struggles against societal norms.',
-        'director': 'Nitesh Tiwari', 'rating': '8.3/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Dilwale Dulhania Le Jayenge', 'language': 'hindi', 'genre': 'comedy',
-        'description': 'A young man and woman fall in love during a trip to Europe, but her strict father has already arranged her marriage. He follows her to India to win over her family without her father\'s knowledge.',
-        'director': 'Aditya Chopra', 'rating': '8.0/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': '3 Idiots', 'language': 'hindi', 'genre': 'comedy',
-        'description': 'Two friends embark on a quest to find their third companion, who disappeared after graduation, while reminiscing about their college days. The film satirizes the pressures of the Indian education system.',
-        'director': 'Rajkumar Hirani', 'rating': '8.4/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Ra.One', 'language': 'hindi', 'genre': 'scifi',
-        'description': 'A video game designer creates a virtual villain who escapes into the real world, forcing the designer\'s son to bring his superhero creation to life. The superhero must protect his family and the world from the rogue antagonist.',
-        'director': 'Anubhav Sinha', 'rating': '4.7/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Krrish', 'language': 'hindi', 'genre': 'scifi',
-        'description': 'Krishna, a young man with superpowers, falls in love and travels to Singapore, where he discovers his destiny as a superhero. He must use his abilities to fight evil and protect humanity.',
-        'director': 'Rakesh Roshan', 'rating': '6.4/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Sholay', 'language': 'hindi', 'genre': 'action',
-        'description': 'Two small-time crooks are hired by a retired police officer to capture a ruthless dacoit named Gabbar Singh. Their mission leads to a series of thrilling confrontations and emotional sacrifices.',
-        'director': 'Ramesh Sippy', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Hera Pheri', 'language': 'hindi', 'genre': 'comedy',
-        'description': 'Three unemployed men accidentally get involved in a kidnapping plot after a wrong number call. Their hilarious attempts to get rich lead to utter chaos and confusion.',
-        'director': 'Priyadarshan', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'PK', 'language': 'hindi', 'genre': 'scifi',
-        'description': 'An alien lands on Earth and loses his remote control, which is essential for his return home. He embarks on a quest to find it, questioning religious dogmas and human beliefs along the way.',
-        'director': 'Rajkumar Hirani', 'rating': '8.1/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Stree', 'language': 'hindi', 'genre': 'horror',
-        'description': 'In a town where a female spirit abducts men during a four-day festival, a tailor and his friends try to uncover the mystery. They must find a way to protect the town from the supernatural entity.',
-        'director': 'Amar Kaushik', 'rating': '7.5/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Bhool Bhulaiyaa', 'language': 'hindi', 'genre': 'horror',
-        'description': 'An American-educated psychiatrist is called to a family mansion when a newlywed couple experiences strange occurrences. He tries to solve the mystery of a vengeful spirit haunting the house.',
-        'director': 'Priyadarshan', 'rating': '7.4/10', 'platform': 'Disney+ Hotstar'
-    },
-    # New Hindi Movie for Fantasy (placeholder)
-    {
-        'title': 'Brahmastra: Part One – Shiva', 'language': 'hindi', 'genre': 'fantasy',
-        'description': 'A young man named Shiva discovers he has a mysterious connection with fire and is part of a secret society that protects powerful astras. He must learn to control his powers and stop a dark force threatening the world.',
-        'director': 'Ayan Mukerji', 'rating': '5.6/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Tumbbad', 'language': 'hindi', 'genre': 'fantasy',
-        'description': 'In a cursed village, a man becomes obsessed with finding a hidden treasure guarded by an ancient supernatural entity. His greed leads him deeper into a dark and mysterious world.',
-        'director': 'Rahi Anil Barve', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'
-    },
+    {'title': 'Pathaan', 'language': 'hindi', 'genre': 'action', 'description': 'An exiled RAW agent takes on a dangerous terrorist group.', 'director': 'Siddharth Anand', 'rating': '6.0/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Dangal', 'language': 'hindi', 'genre': 'action', 'description': 'Mahavir Singh Phogat trains his daughters to become world-class wrestlers.', 'director': 'Nitesh Tiwari', 'rating': '8.3/10', 'platform': 'Netflix'},
+    {'title': 'Sholay', 'language': 'hindi', 'genre': 'action', 'description': 'Two crooks are hired to capture a ruthless dacoit.', 'director': 'Ramesh Sippy', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Vikram Vedha', 'language': 'hindi', 'genre': 'action', 'description': 'A tough cop tracks a gangster who tells him stories that change his perspective.', 'director': 'Pushkar-Gayathri', 'rating': '7.1/10', 'platform': 'Voot'},
+    {'title': 'Jawan', 'language': 'hindi', 'genre': 'action', 'description': 'A man is driven by a personal vendetta to rectify the wrongs in society.', 'director': 'Atlee', 'rating': '7.0/10', 'platform': 'Netflix'},
+
+    {'title': '3 Idiots', 'language': 'hindi', 'genre': 'comedy', 'description': 'Two friends search for their long-lost companion while reminiscing about college.', 'director': 'Rajkumar Hirani', 'rating': '8.4/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Hera Pheri', 'language': 'hindi', 'genre': 'comedy', 'description': 'Three unemployed men get involved in a kidnapping plot.', 'director': 'Priyadarshan', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Andhadhun', 'language': 'hindi', 'genre': 'comedy', 'description': 'A blind pianist unknowingly becomes embroiled in a murder.', 'director': 'Sriram Raghavan', 'rating': '8.2/10', 'platform': 'Netflix'},
+    {'title': 'Chupke Chupke', 'language': 'hindi', 'genre': 'comedy', 'description': 'A newlywed professor plays a prank on his wife\'s family.', 'director': 'Hrishikesh Mukherjee', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Stree', 'language': 'hindi', 'genre': 'comedy', 'description': 'Men live in fear of a spirit that abducts them at night.', 'director': 'Amar Kaushik', 'rating': '7.5/10', 'platform': 'Netflix'},
+
+    {'title': 'PK', 'language': 'hindi', 'genre': 'scifi', 'description': 'An alien on Earth questions religious dogmas.', 'director': 'Rajkumar Hirani', 'rating': '8.1/10', 'platform': 'Netflix'},
+    {'title': 'Ra.One', 'language': 'hindi', 'genre': 'scifi', 'description': 'A virtual villain enters the real world.', 'director': 'Anubhav Sinha', 'rating': '4.7/10', 'platform': 'Netflix'},
+    {'title': 'Krrish', 'language': 'hindi', 'genre': 'scifi', 'description': 'Krishna uses his superpowers to fight evil.', 'director': 'Rakesh Roshan', 'rating': '6.4/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Mr. India', 'language': 'hindi', 'genre': 'scifi', 'description': 'A man discovers a watch that makes him invisible.', 'director': 'Shekhar Kapur', 'rating': '7.7/10', 'platform': 'Zee5'},
+    {'title': 'Koi... Mil Gaya', 'language': 'hindi', 'genre': 'scifi', 'description': 'A mentally challenged youth befriends an alien.', 'director': 'Rakesh Roshan', 'rating': '7.1/10', 'platform': 'Zee5'},
+
+    {'title': 'Tumbbad', 'language': 'hindi', 'genre': 'horror', 'description': 'A man searches for a hidden treasure in a cursed village.', 'director': 'Rahi Anil Barve', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Bhool Bhulaiyaa', 'language': 'hindi', 'genre': 'horror', 'description': 'A psychiatrist solves the mystery of a spirit in a mansion.', 'director': 'Priyadarshan', 'rating': '7.4/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Raat', 'language': 'hindi', 'genre': 'horror', 'description': 'A family experiences supernatural events in their new home.', 'director': 'Ram Gopal Varma', 'rating': '7.1/10', 'platform': 'Amazon Prime Video'},
+    {'title': '13B: Fear Has a New Address', 'language': 'hindi', 'genre': 'horror', 'description': 'A man realizes a TV show is predicting his family\'s future.', 'director': 'Vikram Kumar', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Pari', 'language': 'hindi', 'genre': 'horror', 'description': 'A man helps a mysterious woman chained in a hut.', 'director': 'Prosit Roy', 'rating': '6.6/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'Brahmastra', 'language': 'hindi', 'genre': 'fantasy', 'description': 'Shiva discovers his connection to fire and ancient weapons.', 'director': 'Ayan Mukerji', 'rating': '5.6/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Paheli', 'language': 'hindi', 'genre': 'fantasy', 'description': 'A ghost falls in love with a newlywed woman.', 'director': 'Amol Palekar', 'rating': '6.4/10', 'platform': 'Netflix'},
+    {'title': 'Bulbbul', 'language': 'hindi', 'genre': 'fantasy', 'description': 'A child bride grows up to be a mysterious woman in a village.', 'director': 'Anvita Dutt', 'rating': '6.6/10', 'platform': 'Netflix'},
+    {'title': 'Makdee', 'language': 'hindi', 'genre': 'fantasy', 'description': 'A girl enters a haunted mansion to save her sister.', 'director': 'Vishal Bhardwaj', 'rating': '7.4/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Jaani Dushman', 'language': 'hindi', 'genre': 'fantasy', 'description': 'A shape-shifting snake seeks revenge for his lover.', 'director': 'Rajkumar Kohli', 'rating': '2.8/10', 'platform': 'YouTube'},
 
     # Telugu Movies
-    {
-        'title': 'Baahubali: The Beginning', 'language': 'telugu', 'genre': 'action',
-        'description': 'A young man discovers his royal lineage and destiny to reclaim his rightful place as king of Mahishmati. The film is a grand epic of war, betrayal, and heroism.',
-        'director': 'S. S. Rajamouli', 'rating': '8.0/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Ala Vaikunthapurramuloo', 'language': 'telugu', 'genre': 'comedy',
-        'description': 'Bantu, a young man who is often overlooked by his father, discovers he was swapped at birth and is actually the heir to a wealthy family. He then embarks on a journey to claim his true identity and place.',
-        'director': 'Trivikram Srinivas', 'rating': '7.2/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Arjun Reddy', 'language': 'telugu', 'genre': 'action',
-        'description': 'A brilliant but short-tempered surgeon spirals into self-destruction after his girlfriend is forced to marry another man. He struggles to cope with his heartbreak and addiction.',
-        'director': 'Sandeep Reddy Vanga', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Pelli Choopulu', 'language': 'telugu', 'genre': 'comedy',
-        'description': 'A modern take on arranged marriages, where a pragmatic aspiring chef and an ambitious but directionless young man meet for a traditional "pelli choopulu" (matchmaking session). They decide to start a food truck business together.',
-        'director': 'Tharun Bhascker Dhaassyam', 'rating': '8.0/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Eega', 'language': 'telugu', 'genre': 'fantasy',
-        'description': 'A murdered man is reincarnated as a housefly and seeks revenge on his killer. The fly uses its intelligence to torment and ultimately defeat the antagonist.',
-        'director': 'S. S. Rajamouli', 'rating': '7.7/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Jersey', 'language': 'telugu', 'genre': 'action',
-        'description': 'A talented but failed cricketer decides to return to the sport in his late thirties to fulfill his son\'s wish. He faces numerous challenges and skepticism on his journey.',
-        'director': 'Gowtam Tinnanuri', 'rating': '8.5/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Agent Sai Srinivasa Athreya', 'language': 'telugu', 'genre': 'comedy',
-        'description': 'A small-time detective from Nellore gets entangled in a high-profile case involving unidentified dead bodies. He uses his quirky methods to unravel the complex mystery.',
-        'director': 'Swaroop RSJ', 'rating': '8.4/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Goodachari', 'language': 'telugu', 'genre': 'action',
-        'description': 'An aspiring RAW agent gets framed for a murder and becomes a fugitive. He must clear his name and expose a larger conspiracy while on the run.',
-        'director': 'Sashi Kiran Tikka', 'rating': '7.8/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Kshana Kshanam', 'language': 'telugu', 'genre': 'comedy',
-        'description': 'A young woman witnesses a murder and is pursued by criminals, while a small-time thief gets involved in her escape. Their journey is filled with unexpected twists and humorous situations.',
-        'director': 'Ram Gopal Varma', 'rating': '8.0/10', 'platform': 'Aha'
-    },
-    # New Telugu Movie for SciFi (placeholder)
-    {
-        'title': 'Cosmic Echoes', 'language': 'telugu', 'genre': 'scifi',
-        'description': 'Scientists detect a mysterious signal from deep space that holds the key to humanity\'s future or its destruction. A team embarks on a perilous journey to uncover its origin.',
-        'director': 'SciFi Telugu Director', 'rating': '7.1/10', 'platform': 'Zee5'
-    },
-    # New Telugu Movie for Horror (placeholder)
-    {
-        'title': 'The Haunted Mansion', 'language': 'telugu', 'genre': 'horror',
-        'description': 'A family moves into an old, dilapidated mansion only to discover it is haunted by malevolent spirits. They must fight for their lives to escape the terrifying curse.',
-        'director': 'Horror Telugu Director', 'rating': '6.9/10', 'platform': 'Sun NXT'
-    },
+    {'title': 'Baahubali', 'language': 'telugu', 'genre': 'action', 'description': 'A prince learns about his heritage and fights for the throne.', 'director': 'S. S. Rajamouli', 'rating': '8.0/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'RRR', 'language': 'telugu', 'genre': 'action', 'description': 'Two revolutionaries fight against the British Raj.', 'director': 'S. S. Rajamouli', 'rating': '7.8/10', 'platform': 'Netflix'},
+    {'title': 'Pushpa: The Rise', 'language': 'telugu', 'genre': 'action', 'description': 'A laborer rises in the world of red sandalwood smuggling.', 'director': 'Sukumar', 'rating': '7.6/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Arjun Reddy', 'language': 'telugu', 'genre': 'action', 'description': 'A surgeon spirals into self-destruction after heartbreak.', 'director': 'Sandeep Vanga', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Salaar', 'language': 'telugu', 'genre': 'action', 'description': 'A gang leader makes a promise to a dying friend.', 'director': 'Prashanth Neel', 'rating': '6.5/10', 'platform': 'Netflix'},
+
+    {'title': 'Pelli Choopulu', 'language': 'telugu', 'genre': 'comedy', 'description': 'Two people meet for a matchmaking session and start a business.', 'director': 'Tharun Bhascker', 'rating': '8.0/10', 'platform': 'Netflix'},
+    {'title': 'Mathu Vadalara', 'language': 'telugu', 'genre': 'comedy', 'description': 'A delivery boy gets stuck in a crime scene.', 'director': 'Ritesh Rana', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Jathi Ratnalu', 'language': 'telugu', 'genre': 'comedy', 'description': 'Three happy-go-lucky men end up in jail.', 'director': 'Anudeep KV', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Agent Sai Srinivasa Athreya', 'language': 'telugu', 'genre': 'comedy', 'description': 'A quirky detective solves a high-profile case.', 'director': 'Swaroop RSJ', 'rating': '8.4/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'F2: Fun and Frustration', 'language': 'telugu', 'genre': 'comedy', 'description': 'Two men try to control their wives and escape the madness.', 'director': 'Anil Ravipudi', 'rating': '6.2/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'Aditya 369', 'language': 'telugu', 'genre': 'scifi', 'description': 'People travel through time in a machine.', 'director': 'Singeetam Srinivasa Rao', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Oke Oka Jeevitham', 'language': 'telugu', 'genre': 'scifi', 'description': 'A musician travels back in time to save his mother.', 'director': 'Shree Karthick', 'rating': '7.9/10', 'platform': 'SonyLIV'},
+    {'title': 'Ismart Shankar', 'language': 'telugu', 'genre': 'scifi', 'description': 'A memory chip is implanted in a contract killer.', 'director': 'Puri Jagannadh', 'rating': '5.5/10', 'platform': 'Zee5'},
+    {'title': '7th Sense', 'language': 'telugu', 'genre': 'scifi', 'description': 'A genetic engineering student tries to revive Bodhidharma.', 'director': 'A.R. Murugadoss', 'rating': '6.2/10', 'platform': 'Zee5'},
+    {'title': 'Kalki 2898 AD', 'language': 'telugu', 'genre': 'scifi', 'description': 'A modern avatar of Vishnu descends to protect the world.', 'director': 'Nag Ashwin', 'rating': '7.6/10', 'platform': 'Netflix'},
+
+    {'title': 'Arundhati', 'language': 'telugu', 'genre': 'horror', 'description': 'A brave woman fights an evil sorcerer.', 'director': 'Kodi Ramakrishna', 'rating': '7.3/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Virupaksha', 'language': 'telugu', 'genre': 'horror', 'description': 'Mysterious deaths occur in a village due to a curse.', 'director': 'Karthik Varma', 'rating': '7.2/10', 'platform': 'Netflix'},
+    {'title': 'Masooda', 'language': 'telugu', 'genre': 'horror', 'description': 'A man helps his neighbor when her daughter is possessed.', 'director': 'Sai Kiran', 'rating': '7.2/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'U-Turn', 'language': 'telugu', 'genre': 'horror', 'description': 'An intern investigates deaths at a flyover.', 'director': 'Pawan Kumar', 'rating': '7.0/10', 'platform': 'Netflix'},
+    {'title': 'Bhaagamathie', 'language': 'telugu', 'genre': 'horror', 'description': 'An IAS officer is imprisoned in a haunted house.', 'director': 'G. Ashok', 'rating': '7.0/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'Eega', 'language': 'telugu', 'genre': 'fantasy', 'description': 'A man is reborn as a fly to take revenge.', 'director': 'S. S. Rajamouli', 'rating': '7.7/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Magadheera', 'language': 'telugu', 'genre': 'fantasy', 'description': 'A warrior reborn in the modern era seeks his love.', 'director': 'S. S. Rajamouli', 'rating': '7.7/10', 'platform': 'Aha'},
+    {'title': 'Jagadeka Veerudu Athiloka Sundari', 'language': 'telugu', 'genre': 'fantasy', 'description': 'A man finds a ring belonging to a celestial being.', 'director': 'K. Raghavendra Rao', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Yamadonga', 'language': 'telugu', 'genre': 'fantasy', 'description': 'A thief ends up in Yamaloka and challenges the God of Death.', 'director': 'S. S. Rajamouli', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Karthikeya 2', 'language': 'telugu', 'genre': 'fantasy', 'description': 'A doctor searches for Lord Krishna\'s anklet.', 'director': 'Chandoo Mondeti', 'rating': '7.1/10', 'platform': 'Zee5'},
 
     # Tamil Movies
-    {
-        'title': '24', 'language': 'tamil', 'genre': 'scifi',
-        'description': 'A scientist invents a time-traveling watch, but his evil twin brother seeks to obtain it to alter his own past. The film follows the thrilling chase across different timelines.',
-        'director': 'Vikram Kumar', 'rating': '7.9/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Enthiran', 'language': 'tamil', 'genre': 'scifi',
-        'description': 'A brilliant scientist creates a humanoid robot named Chitti, who develops emotions and falls in love with his creator\'s fiancée. The robot then turns rogue, leading to a chaotic battle.',
-        'director': 'S. Shankar', 'rating': '7.1/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Leo', 'language': 'tamil', 'genre': 'action',
-        'description': 'A mild-mannered cafe owner is forced to reveal his violent past when a gang of criminals attacks his family. He must confront his hidden identity and protect his loved ones.',
-        'director': 'Lokesh Kanagaraj', 'rating': '7.3/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Vikram Vedha', 'language': 'tamil', 'genre': 'action',
-        'description': 'A tough police officer is on the hunt for a notorious gangster, but their encounter leads to a series of mind games and moral dilemmas. The film explores the blurred lines between good and evil.',
-        'director': 'Pushkar-Gayathri', 'rating': '8.3/10', 'platform': 'Zee5'
-    },
-    {
-        'title': 'Kaithi', 'language': 'tamil', 'genre': 'action',
-        'description': 'An ex-convict on parole is caught in a night-long battle with drug lords while trying to meet his daughter for the first time. He must fight his way through a dangerous night to survive.',
-        'director': 'Lokesh Kanagaraj', 'rating': '8.5/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Maanaadu', 'language': 'tamil', 'genre': 'scifi',
-        'description': 'A man gets caught in a time loop and must prevent a political assassination to break free. He relives the same day repeatedly, trying to change the outcome.',
-        'director': 'Venkat Prabhu', 'rating': '7.6/10', 'platform': 'SonyLIV'
-    },
-    {
-        'title': 'Jigarthanda', 'language': 'tamil', 'genre': 'comedy',
-        'description': 'An aspiring filmmaker tries to make a gangster film by secretly observing a real gangster, but his plans go awry. The film blends dark comedy with crime elements.',
-        'director': 'Karthik Subbaraj', 'rating': '8.0/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Pizza', 'language': 'tamil', 'genre': 'horror',
-        'description': 'A pizza delivery boy experiences supernatural events while delivering to a house, leading to a terrifying night. He struggles to distinguish reality from illusion.',
-        'director': 'Karthik Subbaraj', 'rating': '7.6/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Maanagaram', 'language': 'tamil', 'genre': 'action',
-        'description': 'The lives of several strangers intersect in a bustling city after a series of interconnected events. The film explores themes of fate and coincidence in an urban setting.',
-        'director': 'Lokesh Kanagaraj', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'
-    },
-    
+    {'title': 'Kaithi', 'language': 'tamil', 'genre': 'action', 'description': 'An ex-convict fights drug lords to reach his daughter.', 'director': 'Lokesh Kanagaraj', 'rating': '8.5/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Vikram', 'language': 'tamil', 'genre': 'action', 'description': 'A special ops team hunts for a mysterious killer.', 'director': 'Lokesh Kanagaraj', 'rating': '8.3/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Thuppakki', 'language': 'tamil', 'genre': 'action', 'description': 'An army officer hunts sleeper cells in Mumbai.', 'director': 'A.R. Murugadoss', 'rating': '8.1/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Leo', 'language': 'tamil', 'genre': 'action', 'description': 'A cafe owner confronts his violent past.', 'director': 'Lokesh Kanagaraj', 'rating': '7.3/10', 'platform': 'Netflix'},
+    {'title': 'Vada Chennai', 'language': 'tamil', 'genre': 'action', 'description': 'A carrom player enters the world of crime.', 'director': 'Vetrimaaran', 'rating': '8.4/10', 'platform': 'Disney+ Hotstar'},
+
+    {'title': 'Jigarthanda', 'language': 'tamil', 'genre': 'comedy', 'description': 'A filmmaker observes a gangster to make a movie.', 'director': 'Karthik Subbaraj', 'rating': '8.1/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Doctor', 'language': 'tamil', 'genre': 'comedy', 'description': 'A military doctor hunts human traffickers with a quirky family.', 'director': 'Nelson Dilipkumar', 'rating': '7.4/10', 'platform': 'Netflix'},
+    {'title': 'Soodhu Kavvum', 'language': 'tamil', 'genre': 'comedy', 'description': 'Four kidnappers fail hilariously in their missions.', 'director': 'Nalan Kumarasamy', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Panchatanthiram', 'language': 'tamil', 'genre': 'comedy', 'description': 'Five friends get into trouble while on a trip.', 'director': 'K. S. Ravikumar', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Kadhalum Kadandhu Pogum', 'language': 'tamil', 'genre': 'comedy', 'description': 'An unlikely bond between a thug and an IT professional.', 'director': 'Nalan Kumarasamy', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': '24', 'language': 'tamil', 'genre': 'scifi', 'description': 'A scientist invents a time-traveling watch.', 'director': 'Vikram Kumar', 'rating': '7.9/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Enthiran', 'language': 'tamil', 'genre': 'scifi', 'description': 'A humanoid robot develops emotions.', 'director': 'S. Shankar', 'rating': '7.1/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Maanaadu', 'language': 'tamil', 'genre': 'scifi', 'description': 'A man is stuck in a time loop during a political event.', 'director': 'Venkat Prabhu', 'rating': '7.6/10', 'platform': 'SonyLIV'},
+    {'title': 'Indru Netru Naalai', 'language': 'tamil', 'genre': 'scifi', 'description': 'Two friends find a time machine from the future.', 'director': 'R. Ravikumar', 'rating': '8.0/10', 'platform': 'Disney+ Hotstar'},
+    {'title': '7aum Arivu', 'language': 'tamil', 'genre': 'scifi', 'description': 'A descendant of Bodhidharma must stop a biological war.', 'director': 'A.R. Murugadoss', 'rating': '6.2/10', 'platform': 'Zee5'},
+
+    {'title': 'Pizza', 'language': 'tamil', 'genre': 'horror', 'description': 'A delivery boy experiences horror at a house.', 'director': 'Karthik Subbaraj', 'rating': '7.6/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Demonte Colony', 'language': 'tamil', 'genre': 'horror', 'description': 'Friends go into a haunted mansion to steal a necklace.', 'director': 'R. Ajay Gnanamuthu', 'rating': '7.0/10', 'platform': 'Sun NXT'},
+    {'title': 'Pisaasu', 'language': 'tamil', 'genre': 'horror', 'description': 'A man is haunted by the spirit of a girl he tried to save.', 'director': 'Mysskin', 'rating': '7.5/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Aval', 'language': 'tamil', 'genre': 'horror', 'description': 'A neurosurgeon and his wife find their new neighbors haunted.', 'director': 'Milind Rau', 'rating': '6.8/10', 'platform': 'Netflix'},
+    {'title': 'Yaavarum Nalam', 'language': 'tamil', 'genre': 'horror', 'description': 'A TV soap opera mirrors the events in a man\'s family.', 'director': 'Vikram Kumar', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'Ponniyin Selvan: I', 'language': 'tamil', 'genre': 'fantasy', 'description': 'An epic saga of the Chola dynasty.', 'director': 'Mani Ratnam', 'rating': '7.6/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Imsai Arasan 23rd Pulikecei', 'language': 'tamil', 'genre': 'fantasy', 'description': 'A satirical take on kings and historical myths.', 'director': 'Chimbu Deven', 'rating': '7.8/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Aayirathil Oruvan', 'language': 'tamil', 'genre': 'fantasy', 'description': 'A search for a lost Chola prince leads to a hidden civilization.', 'director': 'Selvaraghavan', 'rating': '8.1/10', 'platform': 'Sun NXT'},
+    {'title': 'Iruvar', 'language': 'tamil', 'genre': 'fantasy', 'description': 'A fictionalized take on the life of movie stars in politics.', 'director': 'Mani Ratnam', 'rating': '8.4/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Kaashmora', 'language': 'tamil', 'genre': 'fantasy', 'description': 'A fraudster ends up in a haunted palace with ancient warriors.', 'director': 'Gokul', 'rating': '5.4/10', 'platform': 'Disney+ Hotstar'},
 
     # Kannada Movies
-    {
-        'title': 'K.G.F: Chapter 1', 'language': 'kannada', 'genre': 'action',
-        'description': 'A young man from the slums of Mumbai rises to become a powerful gangster, aiming to control the Kolar Gold Fields. He faces numerous challenges and enemies in his quest for power.',
-        'director': 'Prashanth Neel', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Kirik Party', 'language': 'kannada', 'genre': 'comedy',
-        'description': 'A group of engineering students navigate college life, friendships, and romance, experiencing both joy and heartbreak. The film captures the essence of youth and college nostalgia.',
-        'director': 'Rishab Shetty', 'rating': '8.0/10', 'platform': 'Voot' # Changed director to match common knowledge for this film
-    },
-    {
-        'title': 'Kantara', 'language': 'kannada', 'genre': 'action',
-        'description': 'A fiery young man from a remote village finds himself in a conflict over land with the forest department, intertwined with local traditions and folklore. The film delves into the mystical practices and beliefs of the region.',
-        'director': 'Rishab Shetty', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Ugramm', 'language': 'kannada', 'genre': 'action',
-        'description': 'A man with a violent past tries to live a peaceful life, but circumstances force him to confront his old demons. He must protect his loved ones from dangerous adversaries.',
-        'director': 'Prashanth Neel', 'rating': '8.0/10', 'platform': 'Sun NXT'
-    },
-    {
-        'title': 'Love Mocktail', 'language': 'kannada', 'genre': 'comedy',
-        'description': 'A man recounts his past relationships and heartbreaks to a young woman during a road trip. The film explores the complexities of love and growing up.',
-        'director': 'Darling Krishna', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Rangitaranga', 'language': 'kannada', 'genre': 'horror',
-        'description': 'A novelist returns to his ancestral village with his wife, where they encounter mysterious events and a local legend. They uncover dark secrets and a terrifying curse.',
-        'director': 'Anup Bhandari', 'rating': '8.0/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Kavaludaari', 'language': 'kannada', 'genre': 'action',
-        'description': 'A traffic police constable, bored with his routine job, takes up an old, unsolved case that leads him into a dangerous conspiracy. He must navigate a web of lies and corruption.',
-        'director': 'Hemanth M. Rao', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Bell Bottom', 'language': 'kannada', 'genre': 'comedy',
-        'description': 'A small-time detective in the 1980s gets his big break when he is hired to solve a series of unusual thefts. The film is a quirky and entertaining whodunit.',
-        'director': 'Jayatheertha', 'rating': '8.0/10', 'platform': 'Sun NXT'
-    },
-    # New Kannada Movie for SciFi (placeholder)
-    {
-        'title': 'Lucia', 'language': 'kannada', 'genre': 'scifi',
-        'description': 'A man suffering from insomnia begins taking an experimental pill that causes him to experience vivid dreams where his life is completely different. Soon, the line between his dream world and reality starts to blur.',
-        'director': 'Pawan Kumar', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'
-    },
+    {'title': 'K.G.F: Chapter 1', 'language': 'kannada', 'genre': 'action', 'description': 'A gangster aims to control the gold mines.', 'director': 'Prashanth Neel', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Kantara', 'language': 'kannada', 'genre': 'action', 'description': 'A conflict between a man and forest officials over tradition.', 'director': 'Rishab Shetty', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Mufti', 'language': 'kannada', 'genre': 'action', 'description': 'An undercover cop infiltrates a crime boss\'s inner circle.', 'director': 'Narthan', 'rating': '8.0/10', 'platform': 'Zee5'},
+    {'title': 'Tagaru', 'language': 'kannada', 'genre': 'action', 'description': 'A face-off between a tough cop and a underworld don.', 'director': 'Duniya Soori', 'rating': '7.7/10', 'platform': 'Sun NXT'},
+    {'title': 'Ugramm', 'language': 'kannada', 'genre': 'action', 'description': 'A man with a violent past tries to lead a normal life.', 'director': 'Prashanth Neel', 'rating': '8.0/10', 'platform': 'Voot'},
 
-    {
-        'title': 'Operation Alamelamma', 'language': 'kannada', 'genre': 'scifi',
-        'description': 'A simple bank clerk suddenly finds himself entangled in a mysterious case involving advanced technology and a stolen device that could change the future. He must uncover the truth before it falls into the wrong hands.',
-        'director': 'Suni', 'rating': '7.2/10', 'platform': 'Zee5'
-    },
-    # New Kannada Movie for Fantasy (placeholder)
-    {
-        'title': 'Vikrant Rona', 'language': 'kannada', 'genre': 'fantasy',
-        'description': 'A mysterious police officer arrives in a haunted village where children have been disappearing under strange circumstances. As he investigates, supernatural forces and dark secrets begin to unfold.',
-        'director': 'Anup Bhandari', 'rating': '7.0/10', 'platform': 'Disney+ Hotstar'
-    },
+    {'title': 'Kirik Party', 'language': 'kannada', 'genre': 'comedy', 'description': 'A group of students navigate college life.', 'director': 'Rishab Shetty', 'rating': '8.0/10', 'platform': 'Voot'},
+    {'title': 'Bell Bottom', 'language': 'kannada', 'genre': 'comedy', 'description': 'A detective in the 80s solves unusual thefts.', 'director': 'Jayatheertha', 'rating': '8.0/10', 'platform': 'Sun NXT'},
+    {'title': 'First Rank Raju', 'language': 'kannada', 'genre': 'comedy', 'description': 'A nerd struggles to adapt to the real world.', 'director': 'Naresh Kumar', 'rating': '7.4/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Humble Politician Nograj', 'language': 'kannada', 'genre': 'comedy', 'description': 'A narcissistic politician does anything to stay in power.', 'director': 'Saad Khan', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Rama Rama Re', 'language': 'kannada', 'genre': 'comedy', 'description': 'A convict and his hangman end up on a road trip.', 'director': 'D. Satya Prakash', 'rating': '8.2/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'Lucia', 'language': 'kannada', 'genre': 'scifi', 'description': 'A man uses a pill to live his dream life.', 'director': 'Pawan Kumar', 'rating': '8.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Operation Alamelamma', 'language': 'kannada', 'genre': 'scifi', 'description': 'A clerk gets stuck in a tech-related crime.', 'director': 'Suni', 'rating': '7.2/10', 'platform': 'Zee5'},
+    {'title': 'Blink', 'language': 'kannada', 'genre': 'scifi', 'description': 'A man discovers he can control time through his eyes.', 'director': 'Srinidhi Bengaluru', 'rating': '8.0/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Aatagara', 'language': 'kannada', 'genre': 'scifi', 'description': 'Ten people are stranded on an island with high-tech traps.', 'director': 'K.M. Chaitanya', 'rating': '7.5/10', 'platform': 'Sun NXT'},
+    {'title': 'Man Of The Match', 'language': 'kannada', 'genre': 'scifi', 'description': 'A filmmaker creates chaos during an audition using tech.', 'director': 'D. Satya Prakash', 'rating': '6.4/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'Rangitaranga', 'language': 'kannada', 'genre': 'horror', 'description': 'A novelist uncovers secrets in his ancestral village.', 'director': 'Anup Bhandari', 'rating': '8.2/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Shhh!', 'language': 'kannada', 'genre': 'horror', 'description': 'A film crew encounters a ghost in a remote location.', 'director': 'Upendra', 'rating': '8.1/10', 'platform': 'YouTube'},
+    {'title': 'Aake', 'language': 'kannada', 'genre': 'horror', 'description': 'A single mother experiences paranormal activity in a hospital.', 'director': 'K.M. Chaitanya', 'rating': '6.8/10', 'platform': 'Netflix'},
+    {'title': '6-5=2', 'language': 'kannada', 'genre': 'horror', 'description': 'Found footage of a trekking trip gone wrong.', 'director': 'KS Ashoka', 'rating': '6.5/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Apthamitra', 'language': 'kannada', 'genre': 'horror', 'description': 'A psychiatrist treats a woman obsessed with an ancient spirit.', 'director': 'P. Vasu', 'rating': '8.0/10', 'platform': 'Disney+ Hotstar'},
+
+    {'title': 'Vikrant Rona', 'language': 'kannada', 'genre': 'fantasy', 'description': 'A police officer investigates a haunted village.', 'director': 'Anup Bhandari', 'rating': '7.0/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Babruvahana', 'language': 'kannada', 'genre': 'fantasy', 'description': 'The story of Arjuna and his son Babruvahana.', 'director': 'Hunsur Krishnamurthy', 'rating': '8.4/10', 'platform': 'YouTube'},
+    {'title': 'Avatara Purusha', 'language': 'kannada', 'genre': 'fantasy', 'description': 'A fake exorcist gets caught in real black magic.', 'director': 'Suni', 'rating': '6.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': '777 Charlie', 'language': 'kannada', 'genre': 'fantasy', 'description': 'A lonely man finds meaning through a labrador dog.', 'director': 'Kiranraj K', 'rating': '8.7/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Gajakesari', 'language': 'kannada', 'genre': 'fantasy', 'description': 'A man discovers his past connection to an ancient warrior.', 'director': 'S. Krishna', 'rating': '6.5/10', 'platform': 'Disney+ Hotstar'},
 
     # English Movies
-    {
-        'title': 'The Matrix', 'language': 'english', 'genre': 'scifi',
-        'description': 'A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers. He must choose between blissful ignorance and and the harsh truth.',
-        'director': 'The Wachowskis', 'rating': '8.7/10', 'platform': 'Hulu'
-    },
-    {
-        'title': 'Inception', 'language': 'english', 'genre': 'scifi',
-        'description': 'A thief who steals information by entering people\'s dreams is given the inverse task of planting an idea into a C.E.O.\'s subconscious. He assembles a team for this dangerous mission.',
-        'director': 'Christopher Nolan', 'rating': '8.8/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Interstellar', 'language': 'english', 'genre': 'scifi',
-        'description': 'A team of explorers travel through a wormhole in space in an attempt to ensure humanity\'s survival. They embark on an epic journey beyond our galaxy.',
-        'director': 'Christopher Nolan', 'rating': '8.7/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'Avengers: Endgame', 'language': 'english', 'genre': 'action',
-        'description': 'Adrift in space with no food or water, Tony Stark sends a message to Pepper Potts as his oxygen supply starts to dwindle. Meanwhile, the remaining Avengers must find a way to bring back their fallen allies.',
-        'director': 'Anthony and Joe Russo', 'rating': '8.4/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'Deadpool', 'language': 'english', 'genre': 'comedy',
-        'description': 'A wisecracking mercenary with accelerated healing goes on a revenge spree against the man who gave him his powers. He breaks the fourth wall frequently, adding to the humor.',
-        'director': 'Tim Miller', 'rating': '8.0/10', 'platform': 'Disney+ Hotstar'
-    },
-    {
-        'title': 'The Conjuring', 'language': 'english', 'genre': 'horror',
-        'description': 'Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse. They uncover a terrifying history linked to the property.',
-        'director': 'James Wan', 'rating': '7.5/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Hereditary', 'language': 'english', 'genre': 'horror',
-        'description': 'A grieving family is haunted by tragic and disturbing occurrences after the death of their secretive grandmother. They uncover sinister secrets about their ancestry.',
-        'director': 'Ari Aster', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'
-    },
-    {
-        'title': 'The Lord of the Rings: The Fellowship of the Ring', 'language': 'english', 'genre': 'fantasy',
-        'description': 'A young hobbit inherits a magical ring that holds the key to the destruction of Middle-earth. He embarks on a perilous quest with a fellowship of companions to destroy it.',
-        'director': 'Peter Jackson', 'rating': '8.8/10', 'platform': 'HBO Max'
-    },
-    {
-        'title': 'Harry Potter and the Sorcerer\'s Stone', 'language': 'english', 'genre': 'fantasy',
-        'description': 'An orphaned boy discovers on his eleventh birthday that he is a wizard and is invited to study at Hogwarts School of Witchcraft and Wizardry. He soon uncovers a dark secret about his past.',
-        'director': 'Chris Columbus', 'rating': '7.6/10', 'platform': 'Peacock'
-    },
-    {
-        'title': 'The Invisible Man', 'language': 'english', 'genre': 'horror',
-        'description': 'After her abusive ex-boyfriend commits suicide, a woman suspects she is being stalked by him, even though he is supposedly dead. She discovers he has found a way to become invisible.',
-        'director': 'Leigh Whannell', 'rating': '7.1/10', 'platform': 'HBO Max'
-    },
-    {
-        'title': 'Evil Dead Rise', 'language': 'english', 'genre': 'horror',
-        'description': 'Two estranged sisters find their reunion cut short by the emergence of flesh-eating demons, thrusting them into a primal battle for survival. They must fight for their lives in a confined apartment building.',
-        'director': 'Lee Cronin', 'rating': '6.5/10', 'platform': 'HBO Max'
-    },
-    {
-        'title': 'Pan\'s Labyrinth', 'language': 'english', 'genre': 'fantasy',
-        'description': 'In 1944 fascist Spain, a young girl escapes into a mystical world of fauns and fairies. She discovers she is a princess and must complete three dangerous tasks to gain immortality.',
-        'director': 'Guillermo del Toro', 'rating': '8.2/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'The Shape of Water', 'language': 'english', 'genre': 'fantasy',
-        'description': 'At a top-secret research facility in the 1960s, a lonely janitor forms a unique relationship with an amphibious creature held in captivity. She plans to rescue him from his cruel captors.',
-        'director': 'Guillermo del Toro', 'rating': '7.3/10', 'platform': 'Hulu'
-    },
-    {
-        'title': 'Mad Max: Fury Road', 'language': 'english', 'genre': 'action',
-        'description': 'In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler with the help of a drifter and a group of female prisoners. They embark on a high-octane chase across the desert.',
-        'director': 'George Miller', 'rating': '8.1/10', 'platform': 'HBO Max'
-    },
-    {
-        'title': 'The Grand Budapest Hotel', 'language': 'english', 'genre': 'comedy',
-        'description': 'The adventures of a legendary concierge at a famous European hotel between the first and second World Wars, and his friendship with a young lobby boy. The film is known for its distinctive visual style and quirky humor.',
-        'director': 'Wes Anderson', 'rating': '8.1/10', 'platform': 'HBO Max'
-    },
-    {
-        'title': 'Arrival', 'language': 'english', 'genre': 'scifi',
-        'description': 'When mysterious alien spacecrafts land across the globe, an elite team, led by linguist Louise Banks, is brought together to investigate. They race against time to communicate with the aliens before global war erupts.',
-        'director': 'Denis Villeneuve', 'rating': '7.9/10', 'platform': 'Netflix'
-    },
-    {
-        'title': 'Get Out', 'language': 'english', 'genre': 'horror',
-        'description': 'A young African-American man visits his white girlfriend\'s parents for the first time, only to discover a sinister secret. He uncovers a disturbing truth about the family and their community.',
-        'director': 'Jordan Peele', 'rating': '7.7/10', 'platform': 'Hulu'
-    },
-    {
-        'title': 'Spirited Away', 'language': 'english', 'genre': 'fantasy',
-        'description': 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits, and where humans are changed into beasts. She must find a way to save her parents and return home.',
-        'director': 'Hayao Miyazaki', 'rating': '8.6/10', 'platform': 'HBO Max'
-    },
+    {'title': 'Avengers: Endgame', 'language': 'english', 'genre': 'action', 'description': 'Heroes unite to reverse Thanos\' destruction.', 'director': 'Russo Brothers', 'rating': '8.4/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Mad Max: Fury Road', 'language': 'english', 'genre': 'action', 'description': 'A woman rebels against a tyrant in a wasteland.', 'director': 'George Miller', 'rating': '8.1/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'The Dark Knight', 'language': 'english', 'genre': 'action', 'description': 'Batman faces the Joker in Gotham.', 'director': 'Christopher Nolan', 'rating': '9.0/10', 'platform': 'Netflix'},
+    {'title': 'John Wick', 'language': 'english', 'genre': 'action', 'description': 'An ex-hitman comes out of retirement.', 'director': 'Chad Stahelski', 'rating': '7.4/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Gladiator', 'language': 'english', 'genre': 'action', 'description': 'A Roman general seeks revenge against a corrupt emperor.', 'director': 'Ridley Scott', 'rating': '8.5/10', 'platform': 'Netflix'},
+
+    {'title': 'Deadpool', 'language': 'english', 'genre': 'comedy', 'description': 'A mercenary with healing powers seeks revenge.', 'director': 'Tim Miller', 'rating': '8.0/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'The Grand Budapest Hotel', 'language': 'english', 'genre': 'comedy', 'description': 'The adventures of a concierge at a famous hotel.', 'director': 'Wes Anderson', 'rating': '8.1/10', 'platform': 'Disney+ Hotstar'},
+    {'title': 'Superbad', 'language': 'english', 'genre': 'comedy', 'description': 'Two high school seniors try to buy alcohol for a party.', 'director': 'Greg Mottola', 'rating': '7.6/10', 'platform': 'Netflix'},
+    {'title': 'The Hangover', 'language': 'english', 'genre': 'comedy', 'description': 'Three friends search for their missing groom in Vegas.', 'director': 'Todd Phillips', 'rating': '7.7/10', 'platform': 'Netflix'},
+    {'title': 'Mean Girls', 'language': 'english', 'genre': 'comedy', 'description': 'A new student joins a group of popular girls.', 'director': 'Mark Waters', 'rating': '7.1/10', 'platform': 'Amazon Prime Video'},
+
+    {'title': 'The Matrix', 'language': 'english', 'genre': 'scifi', 'description': 'A hacker discovers reality is a simulation.', 'director': 'The Wachowskis', 'rating': '8.7/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Inception', 'language': 'english', 'genre': 'scifi', 'description': 'A thief enters dreams to steal secrets.', 'director': 'Christopher Nolan', 'rating': '8.8/10', 'platform': 'Netflix'},
+    {'title': 'Interstellar', 'language': 'english', 'genre': 'scifi', 'description': 'Explorers travel through a wormhole to save humanity.', 'director': 'Christopher Nolan', 'rating': '8.7/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Arrival', 'language': 'english', 'genre': 'scifi', 'description': 'Linguists communicate with aliens.', 'director': 'Denis Villeneuve', 'rating': '7.9/10', 'platform': 'Netflix'},
+    {'title': 'Blade Runner 2049', 'language': 'english', 'genre': 'scifi', 'description': 'A blade runner uncovers a long-buried secret.', 'director': 'Denis Villeneuve', 'rating': '8.0/10', 'platform': 'Netflix'},
+
+    {'title': 'The Conjuring', 'language': 'english', 'genre': 'horror', 'description': 'Investigators help a family haunted by a dark presence.', 'director': 'James Wan', 'rating': '7.5/10', 'platform': 'Netflix'},
+    {'title': 'Hereditary', 'language': 'english', 'genre': 'horror', 'description': 'A family is haunted after their grandmother\'s death.', 'director': 'Ari Aster', 'rating': '7.3/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Get Out', 'language': 'english', 'genre': 'horror', 'description': 'A man discovers a sinister secret about his girlfriend\'s family.', 'director': 'Jordan Peele', 'rating': '7.7/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'A Quiet Place', 'language': 'english', 'genre': 'horror', 'description': 'A family must live in silence to avoid monsters.', 'director': 'John Krasinski', 'rating': '7.5/10', 'platform': 'Netflix'},
+    {'title': 'It', 'language': 'english', 'genre': 'horror', 'description': 'Seven kids face a shape-shifting monster.', 'director': 'Andy Muschietti', 'rating': '7.3/10', 'platform': 'Netflix'},
+
+    {'title': 'The Lord of the Rings', 'language': 'english', 'genre': 'fantasy', 'description': 'A hobbit goes on a journey to destroy a ring.', 'director': 'Peter Jackson', 'rating': '8.8/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Harry Potter', 'language': 'english', 'genre': 'fantasy', 'description': 'A boy discovers he is a wizard.', 'director': 'Chris Columbus', 'rating': '7.6/10', 'platform': 'Amazon Prime Video'},
+    {'title': 'Spirited Away', 'language': 'english', 'genre': 'fantasy', 'description': 'A girl enters a world ruled by spirits.', 'director': 'Hayao Miyazaki', 'rating': '8.6/10', 'platform': 'Netflix'},
+    {'title': 'Pan\'s Labyrinth', 'language': 'english', 'genre': 'fantasy', 'description': 'A girl escapes to a mystical world during a war.', 'director': 'Guillermo del Toro', 'rating': '8.2/10', 'platform': 'Netflix'},
+    {'title': 'The Shape of Water', 'language': 'english', 'genre': 'fantasy', 'description': 'A woman forms a relationship with an amphibious creature.', 'director': 'Guillermo del Toro', 'rating': '7.3/10', 'platform': 'Disney+ Hotstar'},
 ]
 
 if 'theme' not in st.session_state:

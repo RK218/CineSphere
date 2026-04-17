@@ -247,4 +247,3 @@ else:
 
 st.markdown("---")
 st.markdown("<center style='opacity: 0.5;'>Built with Streamlit • CinePal Engine</center>", unsafe_allow_html=True)
-)

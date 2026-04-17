@@ -331,97 +331,95 @@ movies_data = [
     },
 ]
 
-# Derive unique languages and genres directly from the movies_data
-all_languages = sorted(list(set(movie['language'] for movie in movies_data)))
-all_genres = sorted(list(set(movie['genre'] for movie in movies_data)))
+if 'theme' not in st.session_state:
+    st.session_state.theme = 'dark'
 
-# --- Streamlit Interface ---
-st.set_page_config(layout="centered", page_title="CineSphere")
+def toggle_theme():
+    st.session_state.theme = 'light' if st.session_state.theme == 'dark' else 'dark'
 
-st.title("🎬 Movie Recommendation Interface")
-st.markdown("---")
+# --- Streamlit UI Setup ---
+st.set_page_config(layout="wide", page_title="CineSphere AI", page_icon="🎬")
 
-st.write("Welcome! Let's find some great movies for you.")
-
-# Use columns for better layout of selection boxes
-col1, col2 = st.columns(2)
-
-with col1:
-    selected_language_display = st.selectbox(
-        "Select Language:",
-        [lang.title() for lang in all_languages], # Display titles, use lowercase for internal logic
-        key="language_select"
-    )
-    selected_language = selected_language_display.lower() # Convert back to lowercase for lookup
-
-with col2:
-    selected_genre_display = st.selectbox(
-        "Select Genre:",
-        [genre.title() for genre in all_genres], # Display titles, use lowercase for internal logic
-        key="genre_select"
-    )
-    selected_genre = selected_genre_display.lower() # Convert back to lowercase for lookup
-
-st.markdown("---")
-
-# Button to trigger recommendations
-if st.button("Get Recommendations"):
-    # Filter movies based on choices
-    recommended_movies = [
-        movie for movie in movies_data
-        if movie['language'] == selected_language and movie['genre'] == selected_genre
-    ]
-
-    if not recommended_movies:
-        st.warning(f"Sorry, no movies found for {selected_language_display} in {selected_genre_display} genre.")
-        st.session_state['recommended_movie_titles'] = [] # Clear previous recommendations
-    else:
-        st.subheader(f"Here are some {selected_language_display} {selected_genre_display} movies for you:")
-        # Store movie titles in session state to persist across reruns for the next selectbox
-        st.session_state['recommended_movie_titles'] = [movie['title'] for movie in recommended_movies]
-
-        # Display the list of recommended movies
-        for i, title in enumerate(st.session_state['recommended_movie_titles']):
-            st.markdown(f"**{i+1}. {title}**")
-        st.info("Select a movie from the dropdown below to get its full description.")
-
-# --- Movie Details Section ---
-st.markdown("---")
-st.subheader("Movie Details")
-
-# This selectbox only appears and is populated if recommendations have been made
-if 'recommended_movie_titles' in st.session_state and st.session_state['recommended_movie_titles']:
-    selected_movie_title = st.selectbox(
-        "Select a movie to see details:",
-        st.session_state['recommended_movie_titles'],
-        key="movie_details_select"
-    )
-
-    # Find the selected movie's data
-    found_movie = None
-    if selected_movie_title: # Ensure a movie is actually selected (not just an empty dropdown)
-        for movie in movies_data:
-            if movie['title'] == selected_movie_title:
-                found_movie = movie
-                break
-
-    if found_movie:
-        st.write(f"### {found_movie['title']}")
-        st.write(f"**Description:** {found_movie['description']}")
-        st.write(f"**Director:** {found_movie['director']}")
-        st.write(f"**Rating:** {found_movie['rating']}")
-        st.write(f"**Streaming Platform:** {found_movie['platform']}")
-    else:
-        st.info("Please select a movie from the list above to view its details.")
-elif 'recommended_movie_titles' in st.session_state and not st.session_state['recommended_movie_titles']:
-     st.info("No recommendations were found for your previous selection. Please adjust your criteria and try again.")
+# Dynamic CSS based on state
+if st.session_state.theme == 'dark':
+    bg_color = "#0e1117"
+    card_color = "#1e2130"
+    text_color = "#ffffff"
+    sub_text = "#bdc3c7"
+    bulb_icon = "💡"
+    bulb_label = "Switch to Light Mode"
 else:
-    st.info("First, get recommendations by selecting a language and genre.")
+    bg_color = "#f0f2f6"
+    card_color = "#ffffff"
+    text_color = "#1e2130"
+    sub_text = "#555555"
+    bulb_icon = "🕯️"
+    bulb_label = "Switch to Dark Mode"
 
-# --- How to Run ---
-st.sidebar.title("Description")
-st.sidebar.markdown(
-    """
-    Select the language and genre of your choice to get a list of recommended movies. Then, select a movie from the dropdown to see its full description, director, rating, and streaming platform.
-    """
+st.markdown(f"""
+    <style>
+    .stApp {{ background-color: {bg_color}; color: {text_color}; }}
+    .movie-card {{
+        background-color: {card_color};
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-left: 5px solid #e50914;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        color: {text_color};
+    }}
+    .rating-badge {{
+        background-color: #f5c518;
+        color: black;
+        padding: 2px 8px;
+        border-radius: 5px;
+        font-weight: bold;
+    }}
+    h1, h2, h3, p {{ color: {text_color} !important; }}
+    </style>
+    """, unsafe_allow_html=True)
+
+# --- Sidebar Filters & Theme Toggle ---
+with st.sidebar:
+    st.title("⚙️ Controls")
+    
+    # Theme Toggle with Light Bulb Indicator
+    st.write(f"### Theme: {st.session_state.theme.title()} {bulb_icon}")
+    if st.button(bulb_label):
+        toggle_theme()
+        st.rerun()
+    
+    st.markdown("---")
+    all_langs = sorted(list(set(m['language'] for m in movies_data)))
+    all_gens = sorted(list(set(m['genre'] for m in movies_data)))
+    
+    sel_lang = st.selectbox("Language", [l.title() for l in all_langs])
+    sel_gen = st.selectbox("Genre", [g.title() for g in all_gens])
+
+# --- Main Content ---
+st.title("🎬 CineSphere")
+st.caption("Custom Movie Recommendations")
+st.markdown("---")
+
+filtered = [m for m in movies_data if m['language'] == sel_lang.lower() and m['genre'] == sel_gen.lower()]
+
+if not filtered:
+    st.error(f"No movies found for {sel_lang} {sel_gen}.")
+else:
+    cols = st.columns(2)
+    for index, movie in enumerate(filtered):
+        # Alternate between columns for a grid look
+        with cols[index % 2]:
+            st.markdown(f"""
+            <div class="movie-card">
+                <span class="rating-badge">⭐ {movie['rating']}</span>
+                <h3 style="margin-top:10px;">{movie['title']}</h3>
+                <p style="color:{sub_text}; font-style:italic;">Directed by {movie['director']}</p>
+                <p>{movie['description']}</p>
+                <small style="color:#007bff;">Stream on {movie['platform']}</small>
+            </div>
+            """, unsafe_allow_html=True)
+
+st.markdown("---")
+st.markdown("<center style='opacity: 0.5;'>Built with Streamlit • CinePal Engine</center>", unsafe_allow_html=True)
 )

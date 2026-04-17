@@ -156,94 +156,127 @@ movies_data = [
     {'title': 'The Shape of Water', 'language': 'english', 'genre': 'fantasy', 'description': 'A woman forms a relationship with an amphibious creature.', 'director': 'Guillermo del Toro', 'rating': '7.3/10', 'platform': 'Disney+ Hotstar'},
 ]
 
+# --- State Management ---
 if 'theme' not in st.session_state:
-    st.session_state.theme = 'dark'
+    st.session_state.theme = 'light'  # Default to Light
+if 'clicked' not in st.session_state:
+    st.session_state.clicked = False
 
 def toggle_theme():
-    st.session_state.theme = 'light' if st.session_state.theme == 'dark' else 'dark'
+    st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'
 
-# --- Streamlit UI Setup ---
-st.set_page_config(layout="wide", page_title="CineSphere AI", page_icon="🎬")
+def handle_click():
+    st.session_state.clicked = True
 
-# Dynamic CSS based on state
-if st.session_state.theme == 'dark':
-    bg_color = "#0e1117"
-    card_color = "#1e2130"
-    text_color = "#ffffff"
-    sub_text = "#bdc3c7"
+# --- Theme Configuration ---
+if st.session_state.theme == 'light':
+    bg_color = "#F8F9FB"
+    sidebar_bg = "#FFFFFF"
+    card_bg = "#FFFFFF"
+    text_main = "#2D3436"
+    text_sub = "#636E72"
+    accent = "#E50914"
     bulb_icon = "💡"
-    bulb_label = "Switch to Light Mode"
+    shadow = "rgba(0,0,0,0.05)"
 else:
-    bg_color = "#f0f2f6"
-    card_color = "#ffffff"
-    text_color = "#1e2130"
-    sub_text = "#555555"
-    bulb_icon = "🕯️"
-    bulb_label = "Switch to Dark Mode"
+    bg_color = "#0F1116"
+    sidebar_bg = "#161920"
+    card_bg = "#1C2029"
+    text_main = "#FDFDFD"
+    text_sub = "#A0AEC0"
+    accent = "#FF4B4B"
+    bulb_icon = "🔌"
+    shadow = "rgba(0,0,0,0.3)"
+
+# --- UI Setup ---
+st.set_page_config(layout="wide", page_title="CineSphere", page_icon="🎬")
 
 st.markdown(f"""
     <style>
-    .stApp {{ background-color: {bg_color}; color: {text_color}; }}
+    .stApp {{ background-color: {bg_color}; color: {text_main}; }}
+    [data-testid="stSidebar"] {{ background-color: {sidebar_bg}; border-right: 1px solid {shadow}; }}
+    
+    .bulb-toggle {{
+        font-size: 50px;
+        cursor: pointer;
+        filter: drop-shadow(0 0 10px {'#F5C518' if st.session_state.theme == 'light' else 'transparent'});
+        transition: 0.3s;
+        text-align: center;
+    }}
+    
     .movie-card {{
-        background-color: {card_color};
-        border-radius: 12px;
-        padding: 20px;
+        background-color: {card_bg};
+        border-radius: 15px;
+        padding: 25px;
         margin-bottom: 20px;
-        border-left: 5px solid #e50914;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        color: {text_color};
+        border-left: 6px solid {accent};
+        box-shadow: 0 10px 15px -3px {shadow};
+        color: {text_main};
     }}
+    
     .rating-badge {{
-        background-color: #f5c518;
-        color: black;
-        padding: 2px 8px;
-        border-radius: 5px;
-        font-weight: bold;
+        background-color: #F5C518;
+        color: #000000;
+        padding: 4px 10px;
+        border-radius: 6px;
+        font-weight: 800;
+        font-size: 0.85em;
     }}
-    h1, h2, h3, p {{ color: {text_color} !important; }}
+    
+    h1, h2, h3 {{ color: {text_main} !important; font-family: 'Inter', sans-serif; }}
+    p {{ color: {text_sub} !important; }}
     </style>
     """, unsafe_allow_html=True)
 
-# --- Sidebar Filters & Theme Toggle ---
+# --- Sidebar ---
 with st.sidebar:
-    st.title("⚙️ Controls")
+    st.markdown("<h2 style='text-align: center;'>⚙️ Controls</h2>", unsafe_allow_html=True)
     
-    # Theme Toggle with Light Bulb Indicator
-    st.write(f"### Theme: {st.session_state.theme.title()} {bulb_icon}")
-    if st.button(bulb_label):
-        toggle_theme()
-        st.rerun()
+    # Custom Bulb Toggle
+    col1, col2, col3 = st.columns([1,2,1])
+    with col2:
+        if st.button(bulb_icon, key="bulb_toggle", help="Click the bulb to toggle theme", use_container_width=True):
+            toggle_theme()
+            st.rerun()
+    st.markdown(f"<p style='text-align: center;'>Mode: {st.session_state.theme.title()}</p>", unsafe_allow_html=True)
     
     st.markdown("---")
-    all_langs = sorted(list(set(m['language'] for m in movies_data)))
-    all_gens = sorted(list(set(m['genre'] for m in movies_data)))
     
-    sel_lang = st.selectbox("Language", [l.title() for l in all_langs])
-    sel_gen = st.selectbox("Genre", [g.title() for g in all_gens])
+    langs = sorted(list(set(m['language'] for m in movies_data)))
+    gens = sorted(list(set(m['genre'] for m in movies_data)))
+    
+    sel_lang = st.selectbox("Language", [l.title() for l in langs])
+    sel_gen = st.selectbox("Genre", [g.title() for g in gens])
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    if st.button("🚀 Generate Recommendation", use_container_width=True, on_click=handle_click):
+        pass
 
 # --- Main Content ---
 st.title("🎬 CineSphere")
-st.caption("Custom Movie Recommendations")
+st.markdown(f"<p style='font-size: 1.2em;'>Discovering your next favorite {sel_lang} {sel_gen} movie...</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-filtered = [m for m in movies_data if m['language'] == sel_lang.lower() and m['genre'] == sel_gen.lower()]
-
-if not filtered:
-    st.error(f"No movies found for {sel_lang} {sel_gen}.")
+if st.session_state.clicked:
+    results = [m for m in movies_data if m['language'] == sel_lang.lower() and m['genre'] == sel_gen.lower()]
+    
+    if not results:
+        st.warning("No matches found for that combination. Try another!")
+    else:
+        # Display results in a grid
+        cols = st.columns(2)
+        for idx, movie in enumerate(results):
+            with cols[idx % 2]:
+                st.markdown(f"""
+                <div class="movie-card">
+                    <span class="rating-badge">⭐ {movie['rating']}</span>
+                    <h3 style="margin-top:15px; margin-bottom:5px;">{movie['title']}</h3>
+                    <p style="font-style:italic; margin-bottom:15px;">Directed by {movie['director']}</p>
+                    <p style="font-size: 0.95em; line-height: 1.6;">{movie['description']}</p>
+                    <p style="color: {accent} !important; font-weight: bold; margin-top: 10px;">Available on {movie['platform']}</p>
+                </div>
+                """, unsafe_allow_html=True)
 else:
-    cols = st.columns(2)
-    for index, movie in enumerate(filtered):
-        # Alternate between columns for a grid look
-        with cols[index % 2]:
-            st.markdown(f"""
-            <div class="movie-card">
-                <span class="rating-badge">⭐ {movie['rating']}</span>
-                <h3 style="margin-top:10px;">{movie['title']}</h3>
-                <p style="color:{sub_text}; font-style:italic;">Directed by {movie['director']}</p>
-                <p>{movie['description']}</p>
-                <small style="color:#007bff;">Stream on {movie['platform']}</small>
-            </div>
-            """, unsafe_allow_html=True)
+    st.info("Click **'Generate Recommendation'** in the sidebar to see movies!")
 
-st.markdown("---")
-st.markdown("<center style='opacity: 0.5;'>Built with Streamlit • CinePal Engine</center>", unsafe_allow_html=True)
+st.markdown("<br><br><center style='opacity: 0.3;'>© 2026 CineSphere AI • Developed for Excellence</center>", unsafe_allow_html=True)
